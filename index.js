@@ -91,4 +91,4 @@ function checkNotAuthenticated(req, res, next) {
   next()//nadaljuj kar si mislu nadaljevt
 }
 
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
