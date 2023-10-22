@@ -28,7 +28,7 @@ app.set('view-engine', 'ejs')
 app.use(express.urlencoded({ extended: false })) 
 app.use(flash())
 app.use(session({
-  secret: "aaaa", //zakriptira vse informacije
+  secret: process.env.SESSION_SECRET, //zakriptira vse informacije
   resave: false, // če se nič ne spremeni ali ponovno shranimo
   saveUninitialized: false
 }))
