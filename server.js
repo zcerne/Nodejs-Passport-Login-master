@@ -19,88 +19,11 @@ initializePassport(
   id => users.find(user => user.id === id)
 )
 
-// initializePassport(
-//   passport,
-//   async (name) => {
-//     const userEmail = await getUserEmailByName(name);
-//     // Assuming you have a list of users, you can check if the email exists
-//     const user = users.find((user) => user.email === userEmail);
-//     return user;
-//   },
-//   async (id) => {
-//     const user = await getUserById(id);
-//     return user;
-//   }
-// );
-
-const { initializeApp } = require('firebase/app')
-const { getFirestore, collection, query, where, getDocs } = require('firebase/firestore');
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDwbdiVB8mUXM0ghmnTSgF01eEjV6HnJjY",
-    authDomain: "buhtli-spletna-stran.firebaseapp.com",
-    projectId: "buhtli-spletna-stran",
-    storageBucket: "buhtli-spletna-stran.appspot.com",
-    messagingSenderId: "1017365393560",
-    appId: "1:1017365393560:web:25300aa935358bc7b0e0ed"
-};
-
-// // init firebase
-initializeApp(firebaseConfig)
-
-// // init services
-const db = getFirestore()
+const {db, getUserEmailByName,  getUserIdByName} = require('./db.js')
 // const users = collection(db, 'users')
 
 
-async function getUserEmailByName(userName) {
-  const usersCollection = collection(db, 'users');
-
-  // Create a query to find the user document with a matching 'name' field
-  const queryByName = query(usersCollection, where('name', '==', userName));
-  try {
-    const querySnapshot = await getDocs(queryByName);
-    
-    if (querySnapshot.size === 0) {
-      throw new Error('No user found with that name.');
-    }
-
-    // Assuming there is only one user with the given name
-    const userDoc = querySnapshot.docs[0];
-    // Access the 'email' field from the user document
-    const userName = userDoc.data().name;
-    return userName;
-  } catch (error) {
-    console.error('Error getting user by name: ', error);
-    return null; // Handle the error or return a default value
-  }
-}
-
-async function getUserIdByName(userId) {
-  const usersCollection = collection(db, 'users');
-
-  // Create a query to find the user document with a matching 'name' field
-  const queryByName = query(usersCollection, where('id', '==', userId));
-
-  try {
-    const querySnapshot = await getDocs(queryByName);
-
-    if (querySnapshot.size === 0) {
-      throw new Error('No user found with that name.');
-    }
-
-    // Assuming there is only one user with the given name
-    const userDoc = querySnapshot.docs[0];
-
-    // Access the 'email' field from the user document
-    const userEmail = userDoc.data().email;
-    return userEmail;
-  } catch (error) {
-    console.error('Error getting user by name: ', error);
-    return null; // Handle the error or return a default value
-  }
-}
-// getUserEmailByName("stempl").then(email => console.log(email))
+getUserEmailByName(db, "stempl").then(email => console.log(email))
 
 
 const users = [] //seznam uporabnikov
