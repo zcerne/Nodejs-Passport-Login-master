@@ -14,16 +14,9 @@ const initializePassport = require('./passport-config') //kle bomo spravlal vse 
 initializePassport(
   passport,
   name => users.find(user => user.name === name),
-  //getUserEmailByName,
-  //getUserIdByName
   id => users.find(user => user.id === id)
 )
 
-const {db, getUserEmailByName,  getUserIdByName} = require('./db.js')
-// const users = collection(db, 'users')
-
-
-getUserEmailByName(db, "stempl").then(email => console.log(email))
 
 
 const users = [] //seznam uporabnikov
